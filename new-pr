@@ -1,0 +1,124 @@
+#!/bin/bash
+
+source $CLIPP_PATH/Cli/utils.sh
+
+validCredentials
+
+function getHelp {
+    echo "Create a new Pull Request
+With no arguments nothing is asked.
+
+    -h|--help       Show this help, then exit
+    -c|--custom     The mode where everything is asked
+    -t|--title      You can type title as an argument
+    --not-ready     When PR still in progress, then don't add review stage label
+\n"
+}
+
+custom=0
+not_ready=0
+title=""
+
+args=("$@")
+for i in "$@"
+do
+    if [[ "$i" = "-h" ]] || [[ "$i" = "--help" ]]; then
+       printf "$(getHelp)"
+       exit 0
+    elif [[ "$i" = "-c" ]] || [[ "$i" = "--custom" ]]; then
+        custom=1
+    elif [[ "$i" = "-c" ]] || [[ "$i" = "--not-ready" ]]; then
+        not_ready=1
+    elif [[ "$i" = "-t" ]] || [[ "$i" = "--title" ]]; then
+        title=$2
+    elif [[ "$i" =~ ^- ]]; then
+        echo "Invalid parameter: $i"
+        exit 1
+    fi
+done
+
+echo "Making a push of your local branch"
+git push origin $(get_current_branch)
+
+originBranch=$(get_current_branch)
+destinationBranch="master"
+issue_number=$(get_current_branch)
+
+[[ $custom -eq 1 ]] && {
+    printf "\n"
+    read -p "This PR is related to which issue (Default: $(get_current_branch) | N for none): " issue_number_custom
+}
+
+[ ! -z "$issue_number_custom" ] && {
+    issue_number=$issue_number_custom
+}
+
+issue_desc=""
+[ ! -z "$issue_number" ] && [ "$issue_number" != "N" ] && {
+    issue_desc="# Este PR é relacionado a qual issue?\n\nConnected to #$issue_number"
+
+    issue_info=$(curl -s $COMMAND "$AUTHORIZATION" https://api.github.com/repos/"$REPO_PATH"/issues/"$issue_number")
+
+    issue_exists=$(echo "$issue_info" | grep message)
+    if [[ $issue_exists == *"Not Found"* ]]; then
+        printf "\e[33mNo issue with this ID was found\e[0m\n"
+        exit 1
+    fi
+
+    issue_in_progress=$(echo "$issue_info" | grep 'Stage: In progress')
+    if [[ ! -z $issue_in_progress ]]; then
+        issue-tag --change-stage 'In progress' 'Review' $issue_number
+    fi
+}
+
+[[ $custom -eq 1 ]] && {
+    printf "\n"
+    read -p "Type the title of your PR (Default: $originBranch): " title
+}
+
+[ -z "$title" ] && {
+    title=$originBranch
+}
+
+addinfo=""
+[[ $custom -eq 1 ]] && {
+    printf "\n"
+    read -p "Type any additional information (optional): " addinfo
+}
+
+[ $custom -eq 1 ] && {
+    printf "\n"
+    read -p "Type the stage of your PR (Default: Review): " stage
+}
+
+stageLabel="Stage: Review"
+[ ! -z "$stage" ] && {
+    stageLabel="Stage: $stage"
+}
+
+printf "\n"
+
+# Creating a new pull request {{{
+data="{ \"title\": \"$title\", \"body\": \"$issue_desc \n\n$addinfo \n\n**Criado via CLI**\", \"head\": \"$originBranch\",  \"base\": \"$destinationBranch\" }"
+
+request_return=$(curl -s -X POST -H "Content-Type: application/json" $COMMAND "$AUTHORIZATION" https://api.github.com/repos/"$REPO_PATH"/pulls -d "$data")
+
+if [[ $request_return == *"Validation Failed"* ]]; then
+    exit 1
+fi
+
+issue_pr_number=$(echo ${request_return} | python -m json.tool | grep number | head -n1 | sed 's/[^0-9]*//g')
+
+[[ $not_ready -eq 0 ]] && {
+    issue-tag --add "$stageLabel" $issue_pr_number
+}
+#}}}
+
+echo "New Pull Request was created: "
+pr_url=$(echo ${request_return} | python -m json.tool | sed -n -e '/"html_url":/ s/^.*"\(.*\)".*/\1/p')
+pr_url=(${pr_url[@]})
+echo "${pr_url[0]}"
+
+[ ! -z ${BROWSER+x}  ] && {
+    "$BROWSER" "${pr_url[0]}"
+}

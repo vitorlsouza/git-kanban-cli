@@ -1,0 +1,55 @@
+#!/bin/bash
+
+get_help() {
+    printf " Creates a new task in you computer, move it on github
+ and notify everybody you are working on it.
+
+ Usage:
+    new-task issueID
+
+ Ex:
+    new-task 3084
+
+ Extra Options:
+
+ NO_ISSUE=1 task-start issue_name
+    \n"
+
+}
+
+source $CLIPP_PATH/Cli/utils.sh
+
+validCredentials
+
+cd $CLIPP_PATH
+issue_number=$1
+
+if [[ -z $1 ]] || [[ $@ =~ --help ]]
+then
+    get_help
+    exit 0
+fi
+
+exists=$(curl -s $COMMAND "$AUTHORIZATION" https://api.github.com/repos/"$REPO_PATH"/issues/"$issue_number" | grep message)
+if [[ $exists == *"Not Found"* ]]; then
+    printf "\e[33mNo issue with this ID was found\e[0m\n"
+    [ -z ${NO_ISSUE+x} ] && {
+        exit 1
+    }
+fi
+
+git stash || true
+
+git checkout master
+
+git fetch origin
+git submodule update --recursive --remote
+
+if [[ $(git branch | grep "$issue_number") ]]; then
+    printf "\e[33mThis branch already exists. Checking out on it.\e[0m\n"
+    git checkout "$issue_number"
+else
+    git checkout -b "$issue_number" origin/master
+    issue-tag --rm 'Stage: Analysis' $issue_number
+    issue-tag --add 'Stage: In Progress' $issue_number
+fi
