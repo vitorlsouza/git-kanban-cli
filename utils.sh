@@ -1,7 +1,9 @@
 #!/bin/bash
-# to use on your machine run: source git-kanban-cli/utils.sh
 
-
+# When command is executed, check if it's inside a git repository
+if [ ! $(git rev-parse --is-inside-work-tree) ]; then
+    exit 1;
+fi
 REPO_PATH=$(git config --get remote.origin.url | sed -r 's/(.*:)(.*)(\..*)/\2/')
 
 AUTHORIZATION="$GITHUB_USER:$GITHUB_PASSWORD"
@@ -9,12 +11,6 @@ COMMAND='-u'
 [ ! -z ${GITHUB_TOKEN+x} ] && {
     AUTHORIZATION="Authorization: token $GITHUB_TOKEN"
     COMMAND='-H'
-}
-
-validGitRepository() {
-    if [ ! $(git rev-parse --is-inside-work-tree) ]; then
-        exit 1;
-    fi
 }
 
 validCredentials() {
