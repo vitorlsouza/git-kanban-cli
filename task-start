@@ -1,8 +1,8 @@
 #!/bin/bash
 
 get_help() {
-    printf " Creates a new task in you computer, move it on github
- and notify everybody you are working on it.
+    printf " Creates a new branch with the issue ID in you computer
+and move it to stage analysis on github.
 
  Usage:
     new-task issueID
@@ -10,9 +10,6 @@ get_help() {
  Ex:
     new-task 3084
 
- Extra Options:
-
- NO_ISSUE=1 task-start issue_name
     \n"
 
 }
@@ -33,9 +30,6 @@ fi
 exists=$(curl -s $COMMAND "$AUTHORIZATION" https://api.github.com/repos/"$REPO_PATH"/issues/"$issue_number" | grep message)
 if [[ $exists == *"Not Found"* ]]; then
     printf "\e[33mNo issue with this ID was found\e[0m\n"
-    [ -z ${NO_ISSUE+x} ] && {
-        exit 1
-    }
 fi
 
 git stash || true
