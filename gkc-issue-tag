@@ -13,8 +13,8 @@ function getHelp {
     --change-stage|-cs 'Current' 'Desired' issueID      Change a the issue label stage
 
  Ex:
-    gkc-gkc-issue-tag --add 'Stage: Analysis' 666
-    gkc-gkc-issue-tag -cs 'Review' 'Testing' 666\n"
+    gkc-issue-tag --add 'Stage: Analysis' 666
+    gkc-issue-tag -cs 'Review' 'Testing' 666\n"
 }
 
 if [[ -z "$1" ]] || [[ $1 == '--help' ]] || [[ $1 == '-h' ]]; then
