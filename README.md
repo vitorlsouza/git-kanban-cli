@@ -69,7 +69,8 @@ Available arguments:
     --change-stage|-cs 'Current' 'Desired' issueID      Change a the issue label stage
 ```
 
-To all scripts:
+
+#### To all scripts:
 ```sh
     comand --help|-h    Script helper
 ```
