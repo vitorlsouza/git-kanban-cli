@@ -28,7 +28,7 @@ Change stage to **Analysis** and assign the task to you
 Usage:
 ```sh
 cd /path/your-project
-analyze issueID
+gkc-analyze issueID
 ```
 
 ### Task start
@@ -37,7 +37,7 @@ Creates a new branch with the issue ID in you computer and move it and move it t
 Usage:
 ```sh
 cd /path/your-project
-task-start issueID
+gkc-task-start issueID
 ```
 
 ### New Pull Request
@@ -46,7 +46,7 @@ Create a new Pull Request with the current branch and last commit
 Usage:
 ```sh
 cd /path/your-project
-new-pr
+gkc-pr
 
 Optional arguments:
     -c|--custom     The mode where everything is asked
@@ -60,8 +60,8 @@ Add, remove or change issue labels
 Usage:
 ```sh
 cd /path/your-project
-issue-tag --add 'Label' issueId
-issue-tag -cs 'Current' 'Desired' issueId
+gkc-issue-tag --add 'Label' issueId
+gkc-issue-tag -cs 'Current' 'Desired' issueId
 
 Available arguments:
     --add 'Label' issueID                               Label an issue
@@ -71,5 +71,5 @@ Available arguments:
 
 To all scripts:
 ```sh
-    --help|-h    Script helper
+    comand --help|-h    Script helper
 ```

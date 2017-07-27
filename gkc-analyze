@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source kanban-cli-utils.sh
+source gkc-utils.sh
 
 validCredentials
 
@@ -10,10 +10,10 @@ if [[ -z $1 ]] || [[ $1 == '--help' ]] || [[ $1 == '-h' ]]; then
     printf "Change stage to Analysis and assign the task to you
 
  Usage:
-    analyze issueID
+    gkc-analyze issueID
 
  Ex:
-    analyze 3084\n"
+    gkc-analyze 3084\n"
     exit 0
 fi
 
@@ -33,7 +33,7 @@ if [[ $exists == *"Not Found"* ]]; then
     exit 1
 fi
 
-issue-tag --add 'Stage: Analysis' $issue_number
+gkc-issue-tag --add 'Stage: Analysis' $issue_number
 
 data="{\"assignees\": [\"$githubuser\"]}"
 curl -s -X POST -H "Content-Type: application/json" https://api.github.com/repos/"$REPO_PATH"/issues/$issue_number $COMMAND "$AUTHORIZATION" -d "$data" > /dev/null

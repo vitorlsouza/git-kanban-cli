@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source kanban-cli-utils.sh
+source gkc-utils.sh
 
 validCredentials
 
@@ -67,7 +67,7 @@ issue_desc=""
 
     issue_in_progress=$(echo "$issue_info" | grep 'Stage: In progress')
     if [[ ! -z $issue_in_progress ]]; then
-        issue-tag --change-stage 'In progress' 'Review' $issue_number
+        gkc-issue-tag --change-stage 'In progress' 'Review' $issue_number
     fi
 }
 
@@ -110,7 +110,7 @@ fi
 issue_pr_number=$(echo ${request_return} | python -m json.tool | grep number | head -n1 | sed 's/[^0-9]*//g')
 
 [[ $not_ready -eq 0 ]] && {
-    issue-tag --add "$stageLabel" $issue_pr_number
+    gkc-issue-tag --add "$stageLabel" $issue_pr_number
 }
 #}}}
 
