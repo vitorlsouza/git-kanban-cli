@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source $CLIPP_PATH/Cli/utils.sh
+source kanban-cli-utils.sh
 
 validCredentials
 

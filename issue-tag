@@ -1,11 +1,12 @@
 #!/bin/bash
 
-source $CLIPP_PATH/Cli/utils.sh
+source kanban-cli-utils.sh
 
 validCredentials
 
 function getHelp {
-    printf "
+    printf "Add, remove or change issue labels
+
  Usage:
     --add 'Label' issueID                               Label an issue
     --rm 'Label' issueID                                Dislabel an issue

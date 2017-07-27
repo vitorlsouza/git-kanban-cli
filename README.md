@@ -21,10 +21,11 @@ cd /your/path
 If it didn't work, try run it with `sudo`
 
 ```
+
 ### Analyze
 Change stage to **Analysis** and assign the task to you
 
-Usage: 
+Usage:
 ```sh
 cd /path/your-project
 analyze issueID
@@ -33,7 +34,7 @@ analyze issueID
 ### Task start
 Creates a new branch with the issue ID in you computer and move it and move it to stage In Progress.
 
-Usage: 
+Usage:
 ```sh
 cd /path/your-project
 task-start issueID
@@ -42,19 +43,33 @@ task-start issueID
 ### New Pull Request
 Create a new Pull Request with the current branch and last commit
 
-Usage: 
+Usage:
 ```sh
 cd /path/your-project
 new-pr
 
-Help:
-    -h|--help       Show this help, then exit
+Optional arguments:
     -c|--custom     The mode where everything is asked
-    -t|--title      You can type title as an argument
-    --not-ready     When PR still in progress, then don't add review stage label
+    -t|--title      You can type title as an argument (default is the current branch)
+    --not-ready     When PR still in progress, then the review stage label isn't added
+```
+
+### Issue tag
+Add, remove or change issue labels
+
+Usage:
+```sh
+cd /path/your-project
+issue-tag --add 'Label' issueId
+issue-tag -cs 'Current' 'Desired' issueId
+
+Available arguments:
+    --add 'Label' issueID                               Label an issue
+    --rm 'Label' issueID                                Dislabel an issue
+    --change-stage|-cs 'Current' 'Desired' issueID      Change a the issue label stage
 ```
 
 To all scripts:
 ```sh
-    --help, -h    Script helper
+    --help|-h    Script helper
 ```

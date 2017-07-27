@@ -1,11 +1,11 @@
 #!/bin/bash
 
-source $CLIPP_PATH/Cli/utils.sh
+source kanban-cli-utils.sh
 
 validCredentials
 
 function getHelp {
-    echo "Create a new Pull Request
+    echo "Create a new Pull Request with the current branch and last commit
 With no arguments nothing is asked.
 
     -h|--help       Show this help, then exit

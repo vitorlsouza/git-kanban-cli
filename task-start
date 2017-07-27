@@ -1,14 +1,16 @@
 #!/bin/bash
 
+source kanban-cli-utils.sh
+
 get_help() {
     printf " Creates a new branch with the issue ID in you computer
-and move it to stage analysis on github.
+and move it to stage In Progress on github.
 
  Usage:
-    new-task issueID
+    task-start issueID
 
  Ex:
-    new-task 3084
+    task-start 3084
 
     \n"
 
