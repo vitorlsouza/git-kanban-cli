@@ -1,26 +1,24 @@
 #!/bin/bash
 
-source kanban-cli-utils.sh
+source gkc-utils.sh
 
 get_help() {
-    printf " Creates a new branch with the issue ID in you computer
+    printf "Creates a new branch with the issue ID in you computer
 and move it to stage In Progress on github.
 
  Usage:
-    task-start issueID
+    gkc-task-start issueID
 
  Ex:
-    task-start 3084
+    gkc-task-start 3084
 
     \n"
 
 }
 
-source $CLIPP_PATH/Cli/utils.sh
 
 validCredentials
 
-cd $CLIPP_PATH
 issue_number=$1
 
 if [[ -z $1 ]] || [[ $@ =~ --help ]]
@@ -46,6 +44,6 @@ if [[ $(git branch | grep "$issue_number") ]]; then
     git checkout "$issue_number"
 else
     git checkout -b "$issue_number" origin/master
-    issue-tag --rm 'Stage: Analysis' $issue_number
-    issue-tag --add 'Stage: In Progress' $issue_number
+    gkc-issue-tag --rm 'Stage: Analysis' $issue_number
+    gkc-issue-tag --add 'Stage: In Progress' $issue_number
 fi
