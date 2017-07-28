@@ -15,12 +15,15 @@ export GITHUB_PASSWORD=userpass
 To install into your machine run the commands bellow:
 ```sh
 git clone git@github.com:euclecio/git-kanban-cli.git /your/path
+```
+Or you can download the files to `/your/path`
+
+Then to configure:
+```sh
 cd /your/path
 ./configure
 ```
-If it didn't work, try run it with `sudo`
-
-```
+If it didn't work, try run `sudo ./configure`
 
 ### Analyze
 Change stage to **Analysis** and assign the task to you
@@ -47,8 +50,10 @@ Usage:
 ```sh
 cd /path/your-project
 gkc-pr
+```
 
 Optional arguments:
+```sh
     -c|--custom     The mode where everything is asked
     -t|--title      You can type title as an argument (default is the current branch)
     --not-ready     When PR still in progress, then the review stage label isn't added
@@ -62,15 +67,17 @@ Usage:
 cd /path/your-project
 gkc-issue-tag --add 'Label' issueId
 gkc-issue-tag -cs 'Current' 'Desired' issueId
+```
 
 Available arguments:
+```sh
     --add 'Label' issueID                               Label an issue
     --rm 'Label' issueID                                Dislabel an issue
     --change-stage|-cs 'Current' 'Desired' issueID      Change a the issue label stage
 ```
 
 
-#### To all scripts:
+### To all scripts:
 ```sh
     comand --help|-h    Script helper
 ```
