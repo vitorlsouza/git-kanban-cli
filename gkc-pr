@@ -5,7 +5,7 @@ source gkc-utils.sh
 validCredentials
 
 function getHelp {
-    echo "Create a new Pull Request with the current branch and last commit
+    echo "Create a new Pull Request with the last commit
 With no arguments nothing is asked.
 
     -h|--help       Show this help, then exit
@@ -55,7 +55,7 @@ issue_number=$(get_current_branch)
 
 issue_desc=""
 [ ! -z "$issue_number" ] && [ "$issue_number" != "N" ] && {
-    issue_desc="# Este PR é relacionado a qual issue?\n\nConnected to #$issue_number"
+    issue_desc="Connected to #$issue_number"
 
     issue_info=$(curl -s $COMMAND "$AUTHORIZATION" https://api.github.com/repos/"$REPO_PATH"/issues/"$issue_number")
 
@@ -99,7 +99,7 @@ stageLabel="Stage: Review"
 printf "\n"
 
 # Creating a new pull request {{{
-data="{ \"title\": \"$title\", \"body\": \"$issue_desc \n\n$addinfo \n\n**Criado via CLI**\", \"head\": \"$originBranch\",  \"base\": \"$destinationBranch\" }"
+data="{ \"title\": \"$title\", \"body\": \"$issue_desc \n\n$addinfo \n\n**Created by Git Kanban Cli**\", \"head\": \"$originBranch\",  \"base\": \"$destinationBranch\" }"
 
 request_return=$(curl -s -X POST -H "Content-Type: application/json" $COMMAND "$AUTHORIZATION" https://api.github.com/repos/"$REPO_PATH"/pulls -d "$data")
 

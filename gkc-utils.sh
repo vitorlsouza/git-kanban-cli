@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# When command is executed, check if it's inside a git repository
+# When a command is executed, check if it's inside a git repository
 if [ ! $(git rev-parse --is-inside-work-tree) ]; then
     exit 1;
 fi
