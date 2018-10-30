@@ -1,3 +1,0 @@
-#!/bin/bash
-cp $(find . -name "gkc-*") /usr/local/bin
-find /usr/local/bin/ -name "gkc-*" -exec chmod -R a+x {} \;
