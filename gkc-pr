@@ -97,10 +97,14 @@ stageLabel="Stage: Review"
     stageLabel="Stage: $stage"
 }
 
-printf "\n"
+assignees=""
+if [ ! -z ${GITHUB_USER+x} ]; then
+    assignees=",\"assignees\": [\"$GITHUB_USER\"]"
+fi
 
+printf "\n"
 # Creating a new pull request {{{
-data="{ \"title\": \"$title\", \"body\": \"$issue_desc \n\n$addinfo \n\n**Created by Git Kanban Cli**\", \"head\": \"$originBranch\",  \"base\": \"$destinationBranch\" }"
+data="{\"title\": \"$title\",\"body\": \"$issue_desc \n\n$addinfo \n\n**Created by Git Kanban Cli**\",\"head\": \"$originBranch\",\"base\": \"$destinationBranch\" $assignees}"
 
 request_return=$(curl -s -X POST -H "Content-Type: application/json" $COMMAND "$AUTHORIZATION" https://api.github.com/repos/"$REPO_PATH"/pulls -d "$data")
 
