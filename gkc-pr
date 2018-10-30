@@ -71,13 +71,14 @@ issue_desc=""
     fi
 }
 
+lastCommitMessage=$(git log --pretty=format:%s -n1)
 [[ $custom -eq 1 ]] && {
     printf "\n"
-    read -p "Type the title of your PR (Default: $originBranch): " title
+    read -p "Type the title of your PR (Default: $lastCommitMessage): " title
 }
 
 [ -z "$title" ] && {
-    title=$originBranch
+    title=$lastCommitMessage
 }
 
 addinfo=""
