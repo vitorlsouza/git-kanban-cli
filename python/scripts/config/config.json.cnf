@@ -1,0 +1,19 @@
+# Duplicate this file as config.json with your own vars
+{
+    "github": {
+        "api_token": "YOUR_OAUTH_TOKEN",
+        "repository_id": "YOUR_REPOSITORY_ID",
+        "repository_path": "YOUR_REPOSITORY_PATH"
+    },
+    "labels": [
+        "Bug",
+        "Feature"
+    ],
+    "collaborators": [
+        {
+            "name": "Foo Bar",
+            "username": "foobar",
+            "company": "Software Ltda"
+        }
+    ]
+}

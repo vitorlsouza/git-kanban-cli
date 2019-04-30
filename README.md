@@ -1,11 +1,6 @@
 # Git Kanban Cli
 
-## How to use (Python)
-```sh
-./show-github-issues-metrics.py -h
-```
-
-## How to use (SHELL)
+## How to use
 
 If you want to use this script you have to set the environment variables bellow on `~/.bashrc` (or another file as your choice):
 ```sh
