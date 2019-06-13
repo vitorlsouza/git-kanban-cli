@@ -34,16 +34,18 @@ class ChartBar extends Component {
     };
 
     return(
-      <div>
-        <h2>Tarefas semanais</h2>
-        <Bar
-          ref={(reference) => this.chartReference = reference }
-          data={data}
-          width={500}
-          height={300}
-          onElementsClick={(element => console.log(element))}
-        />
-      </div>
+      <Container>
+        <div>
+          <h2>Tarefas semanais</h2>
+          <Bar
+            ref={(reference) => this.chartReference = reference }
+            data={data}
+            width={500}
+            height={300}
+            onElementsClick={(element => console.log(element))}
+          />
+        </div>
+      </Container>
     )
   }
 };
