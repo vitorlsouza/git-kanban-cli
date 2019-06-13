@@ -1,7 +1,7 @@
 all: configure
 
 shellCheck:
-	./script-check.sh
+	./shell-validator.sh
 
 configure:
 	sudo ./configure.sh
