@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import { Progress } from 'semantic-ui-react'
 
 import { Container, Charts } from './styles';
 import Collaborators from '../../components/Collaborators';
@@ -86,7 +87,8 @@ class Dashboard extends Component {
               "tasks_count": 3
           }
       ],
-      "total_tasks": 15
+      "total_tasks": 15,
+      "percent": 60,
     },
     data: {},
     data2: {},
@@ -165,7 +167,7 @@ class Dashboard extends Component {
       datasets: data2,
     }
     this.setState({ data2: dataResult2})
-    this.setState({ totalTasks: this.state.json['total_tasks'] })
+    this.setState({ totalTasks: this.state.json['total_tasks'], percent: this.state.json['percent'] })
   }
 
   arrayInterpolation = (data, data1) => {
@@ -181,15 +183,20 @@ class Dashboard extends Component {
   }
 
   render() {
-    const {data, data2, totalTasks } = this.state;
+    const {data, data2, totalTasks, percent } = this.state;
     return (
-      <Container>
-        <h1>Total tasks: {totalTasks}</h1>
-        <Charts>
-          <Collaborators data={data}/>
-          <Categories data={data2}/>
-        </Charts>
-      </Container>
+      <Fragment>
+        <Container>
+          <h1>Total tasks: {totalTasks}</h1>
+          <Charts>
+            <Collaborators data={data}/>
+            <Categories data={data2}/>
+          </Charts>
+        </Container>
+        <div style={{ paddingLeft: 80, paddingRight: 80 }}>
+          <Progress percent={percent} indicating progress size="large" />
+        </div>
+      </Fragment>
     )
   }
 }
