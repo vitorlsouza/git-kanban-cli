@@ -15,13 +15,20 @@ class Categories extends Component {
           <Bar
             data={data}
             options={{
+              legend: {
+                display: false,
+              },
               scales: {
                 yAxes: [{
+                  stacked: true,
                   ticks: {
                      max: this.props.yAxes,
                      min: 0,
                      stepSize: 1
                    }
+                 }],
+                 xAxes: [{
+                  stacked: true,
                  }]
                 },
             }}

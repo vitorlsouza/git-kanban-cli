@@ -88,7 +88,7 @@ class Dashboard extends Component {
           }
       ],
       "total_tasks": 15,
-      "percent": 60,
+      "percent": 80,
     },
     data: {},
     data2: {},
@@ -150,20 +150,20 @@ class Dashboard extends Component {
 
     const { colors } = this.state;
     const data2 = await this.state.json['labels'].map((label, index) => {
+      let arrayValues = [0,0,0,0,0,0,0,0,0,0];
+      arrayValues[index] = label.tasks_count;
       return {
         label: label.label,
         backgroundColor: `rgb(${colors[index]}, 0.4)`,
         borderColor: `rgb(${colors[index]})`,
         hoverBackgroundColor: `rgb(${colors[index]}, 0.6)`,
         hoverBorderColor: `rgb(${colors[index]})`,
-        data: [label.tasks_count]
+        data: arrayValues
       }
-    }).filter(element => {
-      return element.data[0] > 0
     })
 
     const dataResult2 = {
-      labels: ['Categories'],
+      labels: ['Backend', 'DevOps', 'Frontend', 'Mobile', 'UX', 'Reseller Demand', 'Bug', 'Improvement', 'Maintenance', 'New feature'],
       datasets: data2,
     }
     this.setState({ data2: dataResult2})
