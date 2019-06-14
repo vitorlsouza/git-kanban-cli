@@ -11,19 +11,19 @@ class ChartBar extends Component {
         <div>
           <h2>Collaborators</h2>
           <Bar
+            ref={ref => this.chart = ref}
             data={data}
             height={250}
             width={400}
             options={{
               scales: {
+                xAxes: [{
+                    stacked: true,
+                }],
                 yAxes: [{
-                  ticks: {
-                     max: this.props.yAxes,
-                     min: 0,
-                     stepSize: 1
-                   }
-                 }]
-                },
+                    stacked: true,
+                }]
+              }
             }}
           />
         </div>

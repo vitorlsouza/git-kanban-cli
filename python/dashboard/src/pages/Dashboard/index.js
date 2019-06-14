@@ -106,33 +106,37 @@ class Dashboard extends Component {
   }
 
   async componentDidMount() {
-    const data = await this.state.json['collaborators'].map(collaborator => {
+    const data = await this.state.json['collaborators'].map((collaborator, index) => {
+      let arrayValues = [null,null,null,null,null,null,null];
+      arrayValues[index] = collaborator.tasks_count;
       return {
         label: `${collaborator.name} - tasks` ,
-        backgroundColor: 'rgb(195, 41, 41, 0.4)',
-        borderColor: 'rgba(195, 41, 41,1)',
-        hoverBackgroundColor: 'rgba(195, 41, 41,0.6)',
-        hoverBorderColor: 'rgba(195, 41, 41,1)',
-        data: [collaborator.tasks_count]
+        backgroundColor: 'rgb(58, 61, 186, 0.4)',
+        borderColor: 'rgba(58, 61, 186,1)',
+        hoverBackgroundColor: 'rgba(58, 61, 186,0.6)',
+        hoverBorderColor: 'rgba(58, 61, 186,1)',
+        data: arrayValues,
+        stack: 1
       }
     })
-    const data1 = await this.state.json['collaborators'].map(collaborator => {
+    const data1 = await this.state.json['collaborators'].map((collaborator,index) => {
+      let arrayValues = [null,null,null,null,null,null,null];
+      arrayValues[index] = collaborator.pair_count;
       return {
         label: `${collaborator.name} - pair`,
         backgroundColor: 'rgb(32, 123, 32, 0.4)',
         borderColor: 'rgba(32, 123, 32,1)',
         hoverBackgroundColor: 'rgba(32, 123, 32,0.6)',
         hoverBorderColor: 'rgba(32, 123, 32,1)',
-        data: [collaborator.pair_count]
+        data: arrayValues,
+        stack: 2
       }
     })
+
     const newArray = this.arrayInterpolation(data, data1)
-      .filter(element => {
-        return element.data[0] > 0
-      })
 
     const dataResult = {
-      labels: ['Collaborators'],
+      labels: ['Euclecio', 'Harold', 'Vitor', 'Filipe', 'Ismael', 'Anderson', 'Felipe F.'],
       datasets: newArray,
     }
 
