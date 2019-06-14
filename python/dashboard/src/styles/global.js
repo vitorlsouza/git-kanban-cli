@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background: rgba(0,0,0, .2);
+    background: rgba(55, 55, 55, 0.3);
     text-rendering: optimizeLegibility !important;
     -webkit-font-smoothing: antialiased !important;
   }

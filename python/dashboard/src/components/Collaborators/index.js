@@ -13,15 +13,21 @@ class ChartBar extends Component {
           <Bar
             ref={ref => this.chart = ref}
             data={data}
-            height={250}
-            width={400}
             options={{
+              legend: {
+                display: false,
+              },
               scales: {
                 xAxes: [{
                     stacked: true,
                 }],
                 yAxes: [{
                     stacked: true,
+                    ticks: {
+                      max: this.props.yAxes,
+                      min: 0,
+                      stepSize: 1
+                    }
                 }]
               }
             }}

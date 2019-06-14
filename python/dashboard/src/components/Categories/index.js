@@ -3,7 +3,7 @@ import {Bar} from 'react-chartjs-2';
 
 import { Container } from './styles';
 
-class ChartPie extends Component {
+class Categories extends Component {
 
   render() {
     const { data } = this.props;
@@ -11,11 +11,9 @@ class ChartPie extends Component {
     return(
       <Container>
         <div>
-          <h2>Labels</h2>
+          <h2>Categories</h2>
           <Bar
             data={data}
-            height={250}
-            width={400}
             options={{
               scales: {
                 yAxes: [{
@@ -34,4 +32,4 @@ class ChartPie extends Component {
   }
  }
 
-export default ChartPie;
+export default Categories;

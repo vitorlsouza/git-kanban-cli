@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Container } from './styles';
+import { Container, Charts } from './styles';
 import Collaborators from '../../components/Collaborators';
 import Categories from '../../components/Categories';
 
@@ -105,9 +105,13 @@ class Dashboard extends Component {
       ]
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.updateChart();
+  }
+
+  updateChart = async () => {
     const data = await this.state.json['collaborators'].map((collaborator, index) => {
-      let arrayValues = [null,null,null,null,null,null,null];
+      let arrayValues = [0,0,0,0,0,0,0];
       arrayValues[index] = collaborator.tasks_count;
       return {
         label: `${collaborator.name} - tasks` ,
@@ -120,7 +124,7 @@ class Dashboard extends Component {
       }
     })
     const data1 = await this.state.json['collaborators'].map((collaborator,index) => {
-      let arrayValues = [null,null,null,null,null,null,null];
+      let arrayValues = [0,0,0,0,0,0,0];
       arrayValues[index] = collaborator.pair_count;
       return {
         label: `${collaborator.name} - pair`,
@@ -157,7 +161,7 @@ class Dashboard extends Component {
     })
 
     const dataResult2 = {
-      labels: ['Labels'],
+      labels: ['Categories'],
       datasets: data2,
     }
     this.setState({ data2: dataResult2})
@@ -178,12 +182,13 @@ class Dashboard extends Component {
 
   render() {
     const {data, data2, totalTasks } = this.state;
-
     return (
       <Container>
         <h1>Total tasks: {totalTasks}</h1>
-        <Collaborators data={data}/>
-        <Categories data={data2}/>
+        <Charts>
+          <Collaborators data={data}/>
+          <Categories data={data2}/>
+        </Charts>
       </Container>
     )
   }

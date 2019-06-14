@@ -8,3 +8,11 @@ export const Container = styled.div`
   flex-wrap: wrap;
   padding: 40px;
 `;
+
+export const Charts = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+`
