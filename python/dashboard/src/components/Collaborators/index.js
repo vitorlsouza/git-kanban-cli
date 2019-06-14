@@ -6,7 +6,6 @@ import { Container } from './styles';
 class ChartBar extends Component {
   render() {
     const { data } = this.props;
-
     return(
       <Container>
         <div>
@@ -15,7 +14,17 @@ class ChartBar extends Component {
             data={data}
             height={250}
             width={400}
-            ref={reference => this.chart = reference}
+            options={{
+              scales: {
+                yAxes: [{
+                  ticks: {
+                     max: this.props.yAxes,
+                     min: 0,
+                     stepSize: 1
+                   }
+                 }]
+                },
+            }}
           />
         </div>
       </Container>

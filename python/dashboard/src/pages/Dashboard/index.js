@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 
 import { Container } from './styles';
-import ChartBar from '../../components/ChartBar';
-import ChartPie from '../../components/ChartPie';
-// import ChartLine from '../../components/ChartLine';
+import Collaborators from '../../components/Collaborators';
+import Categories from '../../components/Categories';
 
 class Dashboard extends Component {
   state = {
@@ -101,7 +100,9 @@ class Dashboard extends Component {
       '131, 150, 99',
       '142, 95, 86',
       '0, 0, 205',
-      '153, 50, 204']
+      '153, 50, 204',
+      '225, 198, 53'
+      ]
   }
 
   async componentDidMount() {
@@ -125,7 +126,10 @@ class Dashboard extends Component {
         data: [collaborator.pair_count]
       }
     })
-    const newArray = this.arrayInterpolation(data, data1);
+    const newArray = this.arrayInterpolation(data, data1)
+      .filter(element => {
+        return element.data[0] > 0
+      })
 
     const dataResult = {
       labels: ['Collaborators'],
@@ -138,12 +142,14 @@ class Dashboard extends Component {
     const data2 = await this.state.json['labels'].map((label, index) => {
       return {
         label: label.label,
-        backgroundColor: `rgb(${colors[index]}, 0.2)`,
+        backgroundColor: `rgb(${colors[index]}, 0.4)`,
         borderColor: `rgb(${colors[index]})`,
-        hoverBackgroundColor: `rgb(${colors[index]}, 0.4)`,
+        hoverBackgroundColor: `rgb(${colors[index]}, 0.6)`,
         hoverBorderColor: `rgb(${colors[index]})`,
         data: [label.tasks_count]
       }
+    }).filter(element => {
+      return element.data[0] > 0
     })
 
     const dataResult2 = {
@@ -172,9 +178,8 @@ class Dashboard extends Component {
     return (
       <Container>
         <h1>Total tasks: {totalTasks}</h1>
-        <ChartBar data={data}/>
-        {/* <ChartLine /> */}
-        <ChartPie data={data2}/>
+        <Collaborators data={data}/>
+        <Categories data={data2}/>
       </Container>
     )
   }

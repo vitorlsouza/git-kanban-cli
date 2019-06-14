@@ -16,6 +16,17 @@ class ChartPie extends Component {
             data={data}
             height={250}
             width={400}
+            options={{
+              scales: {
+                yAxes: [{
+                  ticks: {
+                     max: this.props.yAxes,
+                     min: 0,
+                     stepSize: 1
+                   }
+                 }]
+                },
+            }}
           />
         </div>
       </Container>
