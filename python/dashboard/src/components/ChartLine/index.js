@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Line} from 'react-chartjs-2';
+import {Bar} from 'react-chartjs-2';
 
 import { Container } from './styles';
 
@@ -31,7 +31,7 @@ const data = {
       pointHoverBorderWidth: 2,
       pointRadius: 1,
       pointHitRadius: 10,
-      data: [65, 59, 80, 81, 56, 55, 40]
+      data: [75, null, 89, 34, 54]
     },
     {
       label: 'Tarefas semanais 2',
@@ -52,7 +52,7 @@ const data = {
       pointHoverBorderWidth: 2,
       pointRadius: 1,
       pointHitRadius: 10,
-      data: [84, 45, 90, 45, 76, 23, 65]
+      data: [77, 76, null]
     }
   ]
 };
@@ -63,7 +63,7 @@ class ChartLine extends Component {
       <Container>
         <div>
           <h2>Tarefas semanais</h2>
-          <Line data={data} />
+          <Bar data={data} />
         </div>
       </Container>
     )
