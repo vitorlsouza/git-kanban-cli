@@ -7,11 +7,14 @@ import { Container, Title } from './styles';
 import Labels from '../../components/Labels';
 import Collaborators from '../../components/Collaborators';
 import LastWeek from '../../components/LastWeek';
+import metrics from '../../data/metrics.json';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const cols = { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 };
 const breakpoints = { lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 };
+
+const ENVIRONMENT = process.env.NODE_ENV;
 
 class Dashboard extends Component {
   state = {
@@ -36,8 +39,12 @@ class Dashboard extends Component {
   }
 
   getMetrics = async () => {
-    const metricsData = await api.get('/metrics.json')
+    if (ENVIRONMENT === 'development') {
+      this.setState({ metricsGithub: metrics })
+      return;
+    }
 
+    const metricsData = await api.get('/metrics.json')
     this.setState({ metricsGithub: metricsData.data })
   }
 
