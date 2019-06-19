@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import metrics from '../../data/metrics.json';
+import api from '../../services/api';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import moment from 'moment';
 
@@ -29,15 +29,23 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
+    this.getMetrics();
     setTimeout(() => {
       this.updateChart();
     }, 600)
   }
 
+  getMetrics = async () => {
+    const metricsData = await api.get('/metrics.json')
+
+    this.setState({ metricsGithub: metricsData.data })
+  }
+
   updateChart = async () => {
+    const { metricsGithub } = this.state;
     const chartData  = []
 
-    metrics.collaborators.forEach(collaborator => {
+    metricsGithub.collaborators.forEach(collaborator => {
       if (collaborator.tasks_count > 0) {
         const collaboratorFormatted = {
           name: collaborator.name.substr(0, 12),
@@ -50,7 +58,7 @@ class Dashboard extends Component {
 
     const labelsData = []
 
-    metrics.labels.forEach(labels => {
+    metricsGithub.labels.forEach(labels => {
       if (labels.tasks_count > 0) {
         const labelsFormatted = {
           name: labels.label,
@@ -59,7 +67,7 @@ class Dashboard extends Component {
         labelsData.push(labelsFormatted)
       }
     });
-    this.setState({ collaboratorsData: chartData, labelsData, totalTasks: metrics.total_tasks })
+    this.setState({ collaboratorsData: chartData, labelsData, totalTasks: metricsGithub.total_tasks })
   }
 
   getDate = () => {
